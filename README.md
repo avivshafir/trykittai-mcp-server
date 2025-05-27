@@ -1,4 +1,4 @@
-# TryKitt.ai FastMCP Server
+# TryKitt.ai mcp Server
 
 A FastMCP (Model Context Protocol) server that provides email verification and finding capabilities using the [TryKitt.ai](https://trykitt.ai/) API. This server enables AI assistants to find and verify B2B email addresses with high accuracy and low bounce rates.
 

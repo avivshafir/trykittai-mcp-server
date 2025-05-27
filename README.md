@@ -14,17 +14,26 @@ A FastMCP (Model Context Protocol) server that provides email verification and f
 
 1. Clone this repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/avivshafir/trykittai-mcp-server
 cd trykittai-mcp-server
 ```
 
-2. Install dependencies using uv (recommended) or pip:
+2. Initialize a new Python environment with uv:
+```bash
+# Initialize a new uv project (if starting fresh)
+uv init
+
+# Or create a virtual environment
+uv venv
+
+# Activate the virtual environment
+source .venv/bin/activate  # On macOS/Linux
+```
+
+3. Install dependencies using uv:
 ```bash
 # Using uv (recommended)
 uv sync
-
-# Or using pip
-pip install -r requirements.txt
 ```
 
 ## Setup
@@ -54,6 +63,59 @@ python server.py
 ```
 
 The server will start and be available for MCP connections.
+
+### Adding to MCP Clients
+
+To use this server with MCP-compatible clients, you'll need to configure the client to connect to this server.
+
+#### Claude Desktop
+
+Add the following configuration to your Claude Desktop config file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "trykittai": {
+      "command": "python",
+      "args": ["/path/to/your/trykittai-mcp-server/server.py"],
+      "env": {
+        "TRYKITT_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+#### Other MCP Clients
+
+For other MCP-compatible clients, configure them to connect to:
+- **Command**: `python`
+- **Arguments**: `["/path/to/your/trykittai-mcp-server/server.py"]`
+- **Environment Variables**: `TRYKITT_API_KEY=your_api_key_here`
+
+#### Using with uv
+
+If you're using uv, you can also run the server with:
+
+```json
+{
+  "mcpServers": {
+    "trykittai": {
+      "command": "uv",
+      "args": ["run", "python", "server.py"],
+      "cwd": "/path/to/your/trykittai-mcp-server",
+      "env": {
+        "TRYKITT_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+**Note**: Replace `/path/to/your/trykittai-mcp-server` with the actual absolute path to your project directory, and `your_api_key_here` with your actual TryKitt.ai API key.
 
 ### Available Tools
 
